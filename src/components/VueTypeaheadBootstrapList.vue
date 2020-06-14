@@ -5,6 +5,7 @@
       :active="isListItemActive(id)"
       :data="item.data"
       :html-text="highlight(item.text)"
+      :disabled="isDisabledItem(item)"
       :background-variant="backgroundVariant"
       :text-variant="textVariant"
       @click.native="handleHit(item, $event)"
@@ -19,6 +20,7 @@
 
 <script>
 import VueTypeaheadBootstrapListItem from './VueTypeaheadBootstrapListItem.vue'
+import {includes} from 'lodash'
 
 function sanitize(text) {
   return text.replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -61,6 +63,10 @@ export default {
     minMatchingChars: {
       type: Number,
       default: 2
+    },
+    selectedValues: {
+      type: Array,
+      default: () => []
     },
     showOnFocus: {
       type: Boolean,
@@ -137,6 +143,10 @@ export default {
         this.$emit('hit', this.matchedItems[this.activeListItem])
       }
     },
+    isDisabledItem(item) {
+      return includes(this.selectedValues, item.text)
+    },
+
     isListItemActive(id) {
       return this.activeListItem === id
     },

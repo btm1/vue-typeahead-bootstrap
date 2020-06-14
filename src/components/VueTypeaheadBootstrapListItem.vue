@@ -1,5 +1,6 @@
 <template>
-  <a
+  <button
+    type="button"
     @keydown.tab="$emit('listItemBlur')"
     @keydown.esc.stop.prevent="$emit('listItemBlur')"
     @keydown.down.prevent
@@ -7,13 +8,13 @@
     @keyup.down="$parent.selectNextListItem($event)"
     @keyup.up="$parent.selectPreviousListItem($event)"
     tabindex="0"
-    href="#"
+    :disabled=disabled
     :class="textClasses"
   >
     <slot name="suggestion" v-bind="{ data: data, htmlText: htmlText }">
       <span v-html="htmlText"></span>
     </slot>
-  </a>
+  </button>
 </template>
 
 <script>
@@ -27,6 +28,9 @@ export default {
     data: {},
     htmlText: {
       type: String
+    },
+    disabled: {
+      type: Boolean
     },
     backgroundVariant: {
       type: String

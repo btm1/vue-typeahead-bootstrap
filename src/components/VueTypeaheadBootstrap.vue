@@ -45,6 +45,7 @@
       @hit="handleHit"
       @listItemBlur="handleChildBlur"
       :highlightClass='highlightClass'
+      :selectedValues="selectedValues"
     >
       <!-- pass down all scoped slots -->
       <template v-for="(slot, slotName) in $scopedSlots" :slot="slotName" slot-scope="{ data, htmlText }">
@@ -93,6 +94,7 @@ export default {
       validator: d => d instanceof Function
     },
     backgroundVariant: String,
+    selectedValues: Array,
     textVariant: String,
     inputClass: {
       type: String,
